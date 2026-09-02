@@ -1,0 +1,10 @@
+{
+  "description": "Track and manage shared expenses for travel groups with an easy, mobile-first interface that simplifies payments and balances in Bangladeshi Taka.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

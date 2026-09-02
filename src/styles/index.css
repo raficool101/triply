@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800&display=swap');
+@import 'tailwindcss';
+
+@theme inline {
+  --font-sans: 'Urbanist', sans-serif;
+
+  --color-brand: #0A86A0;
+  --color-brand-50: #EFF9FB;
+  --color-brand-100: #D1EFF5;
+  --color-brand-200: #A3DFE9;
+  --color-brand-600: #0A7490;
+  --color-brand-700: #086478;
+
+  --color-base: #F4F6F9;
+  --color-surface: #FFFFFF;
+  --color-surface-raised: #FAFBFC;
+  --color-border: #E1E7EF;
+  --color-border-strong: #C9D4DF;
+
+  --color-ink: #0F172A;
+  --color-ink-secondary: #475569;
+  --color-ink-muted: #94A3B8;
+
+  --color-positive: #15803D;
+  --color-positive-surface: #F0FDF4;
+  --color-positive-border: #BBF7D0;
+
+  --color-negative: #DC2626;
+  --color-negative-surface: #FFF5F5;
+  --color-negative-border: #FECACA;
+
+  --color-warning: #B45309;
+  --color-warning-surface: #FFFBEB;
+  --color-warning-border: #FDE68A;
+
+  --color-neutral-surface: #F1F5F9;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  font-family: 'Urbanist', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ── Safe area utilities ──────────────────────────────────────────────────── */
+/* Applied directly to fixed/sticky elements; pads content clear of
+   Dynamic Island, notches, and the home indicator bar. */
+.safe-top    { padding-top:    env(safe-area-inset-top,    0px); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+.safe-left   { padding-left:   env(safe-area-inset-left,   0px); }
+.safe-right  { padding-right:  env(safe-area-inset-right,  0px); }
+
+/* ── Scrollbars ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 0; height: 0; }
+
+/* ── Finance numerals ─────────────────────────────────────────────────────── */
+.num {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* ── Nav item transition ──────────────────────────────────────────────────── */
+.nav-item {
+  transition: color 120ms ease, opacity 120ms ease;
+}
+
+/* ── Touch press feedback ─────────────────────────────────────────────────── */
+@media (hover: hover) {
+  .pressable:hover { opacity: 0.82; }
+}
+.pressable:active {
+  transform: scale(0.97);
+  opacity: 0.9;
+}
+
+/* ── Bottom sheet ─────────────────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateX(-50%) translateY(100%); }
+  to   { transform: translateX(-50%) translateY(0); }
+}
+
+/* ── Desktop sidebar slide-in ─────────────────────────────────────────────── */
+@keyframes sidebarIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Full-screen slide-in (Add Expense, secondary screens) ───────────────── */
+@keyframes slideInFromRight {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+/* ── Bottom sheet slide-up ────────────────────────────────────────────────── */
+@keyframes sheetUp {
+  from { transform: translateX(-50%) translateY(100%); }
+  to   { transform: translateX(-50%) translateY(0); }
+}
+
+/* ── Loading spinner ──────────────────────────────────────────────────────── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spin { animation: spin 650ms linear infinite; }
+
+/* ── Join toast ───────────────────────────────────────────────────────────── */
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(12px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0);    }
+}
