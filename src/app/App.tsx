@@ -27,7 +27,7 @@ import AddGuestSheet from "../features/members/components/AddGuestSheet";
 import MemberActionsMenu from "../features/members/components/MemberActionsMenu";
 import MemberOverflowSheet from "../features/members/components/MemberOverflowSheet";
 import RemoveMemberBlockedSheet from "../features/members/components/RemoveMemberBlockedSheet";
-import { IconEdit, IconUserPlus, IconUserX, IconAlertCircle, IconChevronLeft, IconChevronRight, IconDots, IconDotsV, IconArrowRight, IconCheck, IconTrash, IconInfo } from "../components/shared/icons";
+import { IconEdit, IconUserPlus, IconUserX, IconAlertCircle, IconChevronLeft, IconChevronRight, IconDots, IconDotsV, IconArrowRight, IconCheck, IconTrash, IconInfo, IconHistory } from "../components/shared/icons";
 import DeleteSettlementSheet from "../features/settlements/components/DeleteSettlementSheet";
 import SettlementDetailSheet from "../features/settlements/components/SettlementDetailSheet";
 import Badge from "../components/shared/Badge";
@@ -35,6 +35,7 @@ import CATEGORY_META from "../lib/categoryMeta";
 import MemberDetails from "../features/members/MemberDetails";
 import { TOUR } from "../lib/tour";
 import MembersView from "../features/members/MembersView";
+import EmptyState from "../components/shared/EmptyState";
 
 
 
@@ -250,15 +251,7 @@ function IconNote({ size = 16 }: { size?: number }) {
     </svg>
   );
 }
-function IconHistory({ size = 18 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="1 4 1 10 7 10" />
-      <path d="M3.51 15a9 9 0 102.13-9.36L1 10" />
-      <polyline points="12 7 12 12 15 14" />
-    </svg>
-  );
-}
+// IconHistory moved to src/components/shared/icons.tsx
 function IconCheckCircle2({ size = 32 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
@@ -366,18 +359,7 @@ function SidebarNav({ active, onChange }: { active: Tab; onChange: (t: Tab) => v
   );
 }
 
-function EmptyState({ icon, title, body, action }: { icon: ReactNode; title: string; body: string; action?: ReactNode }) {
-  return (
-    <div className="flex flex-col items-center justify-center px-8 py-16 text-center">
-      <div className="w-16 h-16 rounded-[18px] bg-[#F1F5F9] flex items-center justify-center text-[#94A3B8] mb-4">
-        {icon}
-      </div>
-      <p className="text-[16px] font-700 text-[#0F172A] mb-2">{title}</p>
-      <p className="text-[14px] text-[#94A3B8] font-500 leading-relaxed max-w-[260px]">{body}</p>
-      {action && <div className="mt-4">{action}</div>}
-    </div>
-  );
-}
+// EmptyState moved to src/components/shared/EmptyState.tsx
 
 // Bottom sheet scaffold now extracted to src/components/shared/Sheet.tsx
 
