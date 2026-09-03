@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Avatar from "../../components/shared/Avatar";
 import { AuthFlow } from "../auth/Auth";
 
 // ─── Demo invite data ─────────────────────────────────────────────────────────
@@ -100,17 +101,7 @@ function AppMark() {
   );
 }
 
-// ─── Avatar (minimal, matches existing app) ───────────────────────────────────
-function GuestAvatar({ g }: { g: Guest }) {
-  return (
-    <div
-      className="w-10 h-10 rounded-full flex items-center justify-center text-white text-[13px] font-700 shrink-0"
-      style={{ backgroundColor: g.color }}
-    >
-      {g.initials}
-    </div>
-  );
-}
+// Avatar provided by src/components/shared/Avatar
 
 // ─── Toast ────────────────────────────────────────────────────────────────────
 function JoinedToast({ tourName }: { tourName: string }) {
@@ -238,7 +229,7 @@ function MemberResolution({
           <div className="bg-white rounded-[14px] border border-[#E1E7EF] overflow-hidden divide-y divide-[#F4F6F9]">
             {guests.map((g) => (
               <div key={g.id} className="flex items-center gap-3 px-4 py-3.5">
-                <GuestAvatar g={g} />
+                <Avatar member={g} size={40} />
                 <div className="flex-1 min-w-0">
                   <p className="text-[14px] font-600 text-[#0F172A] leading-snug">{g.name}</p>
                   <span className="text-[11px] font-600 text-[#94A3B8] bg-[#F1F5F9] px-1.5 py-[2px] rounded-full leading-none">
@@ -309,7 +300,7 @@ function ClaimConfirm({
 
           {/* Guest being claimed */}
           <div className="flex items-center gap-4 mb-8">
-            <GuestAvatar g={guest} />
+            <Avatar member={guest} size={40} />
             <div>
               <p className="text-[18px] font-800 text-[#0F172A] leading-snug">
                 Claim {guest.name}?

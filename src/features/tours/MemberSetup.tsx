@@ -1,4 +1,5 @@
 import { useState, useRef, useId } from "react";
+import Avatar from "../../components/shared/Avatar";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 export interface SetupMember {
@@ -97,18 +98,7 @@ function IconTrash({ size = 14 }: { size?: number }) {
   );
 }
 
-// ─── Avatar ───────────────────────────────────────────────────────────────────
-function Avatar({ member, size = 38 }: { member: SetupMember; size?: number }) {
-  const fontSize = size <= 32 ? 11 : 13;
-  return (
-    <div
-      className="rounded-full flex items-center justify-center shrink-0 font-700 text-white"
-      style={{ width: size, height: size, backgroundColor: member.color, fontSize }}
-    >
-      {member.initials}
-    </div>
-  );
-}
+// Avatar provided by src/components/shared/Avatar
 
 // ─── Overflow menu ────────────────────────────────────────────────────────────
 function OverflowMenu({

@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from "react";
+import { fmt } from "../../lib/format";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type TourStatus = "active" | "upcoming" | "completed";
@@ -51,9 +52,6 @@ const TOURS: Tour[] = [
     status: "completed",
   },
 ];
-
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-const fmt = (n: number) => `৳${n.toLocaleString("en-IN")}`;
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
 function IconPlus({ size = 16 }: { size?: number }) {
@@ -202,7 +200,7 @@ function TourCard({ tour, onSelect }: { tour: Tour; onClick?: () => void; onSele
   );
 }
 
-// ─── Section Header ────────────────────────────────────────────────────────────
+// ─── Section Header ───────────────────────────────────────────────────────────
 function SectionLabel({ children }: { children: ReactNode }) {
   return (
     <p className="text-[11px] font-700 text-[#94A3B8] uppercase tracking-wider px-1 mb-2">

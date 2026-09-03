@@ -5,6 +5,8 @@ import CreateTour from "../features/tours/CreateTour";
 import InviteMembers from "../features/tours/InviteMembers";
 import InviteAcceptFlow from "../features/tours/InviteAccept";
 import AddExpense from "../features/expenses/AddExpense";
+import { Avatar } from "../components/shared/Avatar";
+import { fmt } from "../lib/format";
 
 const DEMO_INVITE_MODE = false;
 
@@ -132,7 +134,6 @@ const RECORDED_SETTLEMENTS_INIT: RecordedSettlement[] = [
 const BUDGET = 60000;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
-const fmt = (n: number) => `৳${Math.abs(n).toLocaleString("en-IN")}`;
 
 function computeMembers(members: Member[], expenses: Expense[], recordedSettlements: RecordedSettlement[] = []): Member[] {
   return members.map((m) => {
@@ -447,19 +448,7 @@ function IconCheckCircle2({ size = 32 }: { size?: number }) {
 }
 
 // ─── Primitive Components ─────────────────────────────────────────────────────
-function Avatar({ member, size = "md" }: { member: Pick<Member, "initials" | "color">; size?: "sm" | "md" | "lg" | "xl" }) {
-  const dims = { sm: 32, md: 38, lg: 48, xl: 56 };
-  const texts = { sm: "text-[11px]", md: "text-[13px]", lg: "text-[15px]", xl: "text-[17px]" };
-  const dim = dims[size];
-  return (
-    <div
-      className={`rounded-full flex items-center justify-center shrink-0 font-700 text-white ${texts[size]}`}
-      style={{ width: dim, height: dim, backgroundColor: member.color }}
-    >
-      {member.initials}
-    </div>
-  );
-}
+// `Avatar` moved to `src/components/shared/Avatar.tsx`
 
 function Badge({ label, variant }: { label: string; variant: "positive" | "negative" | "warning" | "neutral" | "brand" }) {
   const styles = {
