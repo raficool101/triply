@@ -15,15 +15,17 @@ import SettlementView from "../features/settlements/SettlementView";
 import StatRow from "../features/home/components/StatRow";
 import RecentExpenses from "../features/home/components/RecentExpenses";
 import QuickBalances from "../features/home/components/QuickBalances";
+import HomeView from "../features/home/HomeView";
 import { BUDGET } from "../features/home/homeConstants";
 
 const DEMO_INVITE_MODE = false;
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-type Tab = "home" | "expenses" | "members" | "settlement";
+// Tab moved to src/types/navigation.ts
 type SyncStatus = "online" | "offline" | "syncing" | "pending" | "failed";
 
 import type { Member, Expense, RecordedSettlement } from "../domain/types";
+import type { Tab } from "../types/navigation";
 import type { SuggestedPayment } from "../features/settlements/settlementUtils";
 import { MemberRowCompact, MemberRow } from "../features/members/components/MemberRow";
 import RemoveMemberConfirmSheet from "../features/members/components/RemoveMemberConfirmSheet";
@@ -353,17 +355,7 @@ function SidebarNav({ active, onChange }: { active: Tab; onChange: (t: Tab) => v
 
 // QuickBalances extracted to src/features/home/components/QuickBalances.tsx
 
-function HomeView({ expenses, members, onTabChange, empty = false, onAddExpense }: {
-  expenses: Expense[]; members: Member[]; onTabChange: (t: Tab) => void; empty?: boolean; onAddExpense?: () => void;
-}) {
-  return (
-    <div>
-      <StatRow expenses={expenses} members={members} empty={empty} />
-      <RecentExpenses expenses={expenses} members={members} onViewAll={() => onTabChange("expenses")} empty={empty} onAddExpense={onAddExpense} />
-      <QuickBalances members={members} onViewAll={() => onTabChange("members")} empty={empty} />
-    </div>
-  );
-}
+// HomeView extracted to src/features/home/HomeView.tsx
 
 // ─── Feature: Expenses View ───────────────────────────────────────────────────
 // ExpenseRow extracted to src/features/expenses/components/ExpenseRow.tsx

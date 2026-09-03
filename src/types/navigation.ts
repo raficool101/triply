@@ -1,0 +1,1 @@
+export type Tab = "home" | "expenses" | "members" | "settlement";
