@@ -27,7 +27,9 @@ import AddGuestSheet from "../features/members/components/AddGuestSheet";
 import MemberActionsMenu from "../features/members/components/MemberActionsMenu";
 import MemberOverflowSheet from "../features/members/components/MemberOverflowSheet";
 import RemoveMemberBlockedSheet from "../features/members/components/RemoveMemberBlockedSheet";
-import { IconEdit, IconUserPlus, IconUserX, IconAlertCircle, IconChevronLeft, IconChevronRight, IconDots, IconDotsV, IconArrowRight, IconCheck } from "../components/shared/icons";
+import { IconEdit, IconUserPlus, IconUserX, IconAlertCircle, IconChevronLeft, IconChevronRight, IconDots, IconDotsV, IconArrowRight, IconCheck, IconTrash, IconInfo } from "../components/shared/icons";
+import DeleteSettlementSheet from "../features/settlements/components/DeleteSettlementSheet";
+import SettlementDetailSheet from "../features/settlements/components/SettlementDetailSheet";
 import Badge from "../components/shared/Badge";
 import CATEGORY_META from "../lib/categoryMeta";
 import MemberDetails from "../features/members/MemberDetails";
@@ -237,26 +239,7 @@ function IconX({ size = 14 }: { size?: number }) {
   );
 }
 // IconEdit extracted to src/components/shared/icons.tsx
-function IconTrash({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="3 6 5 6 21 6" />
-      <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" />
-      <path d="M10 11v6M14 11v6" />
-      <path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" />
-    </svg>
-  );
-}
-// IconUserPlus and IconUserX extracted to src/components/shared/icons.tsx
-function IconInfo({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10" />
-      <line x1="12" y1="8" x2="12" y2="8.01" />
-      <path d="M12 12v4" />
-    </svg>
-  );
-}
+// IconTrash and IconInfo moved to src/components/shared/icons.tsx
 function IconNote({ size = 16 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
@@ -1042,109 +1025,7 @@ function ExpenseDetails({
 
 // ─── Feature: Settlement (full experience) ────────────────────────────────────
 
-
-
-function DeleteSettlementSheet({
-  settlement, members, onConfirm, onClose,
-}: {
-  settlement: RecordedSettlement; members: Member[]; onConfirm: () => void; onClose: () => void;
-}) {
-  const from = members.find((m) => m.id === settlement.from);
-  const to   = members.find((m) => m.id === settlement.to);
-  return (
-    <Sheet onClose={onClose}>
-      <div className="px-5 pt-3 pb-6">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-[12px] bg-[#FFF5F5] flex items-center justify-center text-[#DC2626] shrink-0">
-            <IconTrash size={18} />
-          </div>
-          <div>
-            <p className="text-[16px] font-700 text-[#0F172A]">Delete settlement?</p>
-            <p className="text-[13px] font-500 text-[#94A3B8] mt-0.5">
-              {from?.isMe ? "You" : from?.name.split(" ")[0]} → {to?.isMe ? "you" : to?.name.split(" ")[0]} · {fmt(settlement.amount)}
-            </p>
-          </div>
-        </div>
-        <div className="bg-[#FFF5F5] border border-[#FECACA] rounded-[12px] px-4 py-3 mb-4">
-          <p className="text-[13px] font-500 text-[#DC2626] leading-relaxed">
-            This will reverse the settlement and update member balances. Total Spent will not change.
-          </p>
-        </div>
-        <div className="flex gap-2">
-          <button onClick={onClose} className="pressable flex-1 h-12 rounded-[13px] bg-[#F4F6F9] text-[#475569] font-700 text-[15px]">Cancel</button>
-          <button onClick={onConfirm} className="pressable flex-1 h-12 rounded-[13px] bg-[#DC2626] text-white font-700 text-[15px]">Delete</button>
-        </div>
-      </div>
-    </Sheet>
-  );
-}
-
-function SettlementDetailSheet({
-  settlement, members, canDelete, onDelete, onClose,
-}: {
-  settlement: RecordedSettlement; members: Member[]; canDelete: boolean; onDelete: () => void; onClose: () => void;
-}) {
-  const from     = members.find((m) => m.id === settlement.from);
-  const to       = members.find((m) => m.id === settlement.to);
-  const recorder = members.find((m) => m.id === settlement.recordedBy);
-  return (
-    <Sheet onClose={onClose}>
-      <div className="px-5 pt-1 pb-6">
-        {/* Avatar pair + amount */}
-        <div className="flex items-center justify-center gap-4 py-5 border-b border-[#F4F6F9] mb-4">
-          <div className="flex flex-col items-center gap-1.5">
-            {from && <Avatar member={from} size="lg" />}
-            <p className="text-[12px] font-600 text-[#0F172A]">{from?.isMe ? "You" : from?.name.split(" ")[0]}</p>
-          </div>
-          <div className="flex flex-col items-center gap-1">
-            <div className="text-[#C9D4DF]"><IconArrowRight size={20} /></div>
-            <p className="num text-[20px] font-800 text-[#0A86A0]">{fmt(settlement.amount)}</p>
-          </div>
-          <div className="flex flex-col items-center gap-1.5">
-            {to && <Avatar member={to} size="lg" />}
-            <p className="text-[12px] font-600 text-[#0F172A]">{to?.isMe ? "You" : to?.name.split(" ")[0]}</p>
-          </div>
-        </div>
-
-        {/* Metadata */}
-        <div className="bg-[#F8FAFC] rounded-[12px] border border-[#E1E7EF] overflow-hidden mb-4">
-          <div className="flex items-center gap-3 px-4 py-3 border-b border-[#F1F5F9]">
-            <span className="text-[12px] font-600 text-[#94A3B8] w-24 shrink-0">Date</span>
-            <span className="text-[14px] font-600 text-[#0F172A]">{settlement.date}, 2026</span>
-          </div>
-          <div className="flex items-center gap-3 px-4 py-3">
-            <span className="text-[12px] font-600 text-[#94A3B8] w-24 shrink-0">Recorded by</span>
-            <span className="text-[14px] font-600 text-[#0F172A]">{recorder?.isMe ? "You" : (recorder?.name ?? "Unknown")}</span>
-          </div>
-        </div>
-
-        {/* Delete / info */}
-        {canDelete ? (
-          <button onClick={onDelete} className="pressable w-full flex items-center gap-3 px-4 py-3 rounded-[12px] text-left hover:bg-[#FFF5F5] mb-3">
-            <div className="w-8 h-8 rounded-[9px] bg-[#FFF5F5] flex items-center justify-center text-[#DC2626] shrink-0">
-              <IconTrash size={15} />
-            </div>
-            <div>
-              <p className="text-[15px] font-600 text-[#DC2626]">Delete settlement</p>
-              <p className="text-[12px] font-500 text-[#94A3B8] mt-0.5">Balances will recalculate</p>
-            </div>
-          </button>
-        ) : (
-          <div className="flex items-start gap-3 px-4 py-3 mb-3">
-            <div className="w-8 h-8 rounded-[9px] bg-[#F1F5F9] flex items-center justify-center text-[#94A3B8] shrink-0 mt-0.5">
-              <IconInfo size={14} />
-            </div>
-            <p className="text-[13px] font-500 text-[#475569] leading-relaxed">
-              Only the person who recorded this or the Tour Owner can delete it.
-            </p>
-          </div>
-        )}
-
-        <button onClick={onClose} className="pressable w-full h-11 rounded-[13px] bg-[#F4F6F9] text-[#475569] font-600 text-[14px]">Close</button>
-      </div>
-    </Sheet>
-  );
-}
+ 
 
 function SettlementHistoryView({
   recordedSettlements, members, me, isCurrentUserOwner, onDeleteSettlement, onBack,

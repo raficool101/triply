@@ -1,5 +1,6 @@
 import { useState, useRef, useId } from "react";
 import Avatar from "../../components/shared/Avatar";
+import { IconTrash } from "../../components/shared/icons";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 export interface SetupMember {
@@ -88,15 +89,7 @@ function IconPencil({ size = 14 }: { size?: number }) {
   );
 }
 
-function IconTrash({ size = 14 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="3 6 5 6 21 6" />
-      <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" />
-      <path d="M10 11v6M14 11v6M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" />
-    </svg>
-  );
-}
+
 
 // Avatar provided by src/components/shared/Avatar
 
