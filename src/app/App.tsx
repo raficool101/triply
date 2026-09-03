@@ -21,6 +21,10 @@ import RemoveMemberConfirmSheet from "../features/members/components/RemoveMembe
 import EditNameSheet from "../features/members/components/EditNameSheet";
 import InviteSheet from "../features/members/components/InviteSheet";
 import AddGuestSheet from "../features/members/components/AddGuestSheet";
+import MemberActionsMenu from "../features/members/components/MemberActionsMenu";
+import MemberOverflowSheet from "../features/members/components/MemberOverflowSheet";
+import RemoveMemberBlockedSheet from "../features/members/components/RemoveMemberBlockedSheet";
+import { IconEdit, IconUserPlus, IconUserX, IconAlertCircle } from "../components/shared/icons";
 
 
 
@@ -247,15 +251,7 @@ function IconRefresh({ size = 13 }: { size?: number }) {
     </svg>
   );
 }
-function IconAlertCircle({ size = 13 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10" />
-      <line x1="12" y1="8"  x2="12"    y2="12" />
-      <line x1="12" y1="16" x2="12.01" y2="16" />
-    </svg>
-  );
-}
+// IconAlertCircle extracted to src/components/shared/icons.tsx
 function IconCloud({ size = 13 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -340,14 +336,7 @@ function IconX({ size = 14 }: { size?: number }) {
     </svg>
   );
 }
-function IconEdit({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
-      <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
-    </svg>
-  );
-}
+// IconEdit extracted to src/components/shared/icons.tsx
 function IconTrash({ size = 16 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
@@ -358,26 +347,7 @@ function IconTrash({ size = 16 }: { size?: number }) {
     </svg>
   );
 }
-function IconUserPlus({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <line x1="19" y1="8" x2="19" y2="14" />
-      <line x1="22" y1="11" x2="16" y2="11" />
-    </svg>
-  );
-}
-function IconUserX({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <line x1="17" y1="11" x2="23" y2="17" />
-      <line x1="23" y1="11" x2="17" y2="17" />
-    </svg>
-  );
-}
+// IconUserPlus and IconUserX extracted to src/components/shared/icons.tsx
 function IconInfo({ size = 16 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
@@ -1177,40 +1147,7 @@ function ExpenseDetails({
 
 // ─── Feature: Members View ────────────────────────────────────────────────────
 
-function MemberActionsMenu({ onClose, onInvite, onAddGuest }: {
-  onClose: () => void; onInvite: () => void; onAddGuest: () => void;
-}) {
-  return (
-    <Sheet onClose={onClose}>
-      <div className="px-3 py-3 space-y-0.5">
-        <button onClick={() => { onInvite(); onClose(); }} className="pressable w-full flex items-center gap-3 px-4 py-3.5 rounded-[12px] text-left hover:bg-[#F4F6F9]">
-          <div className="w-9 h-9 rounded-[10px] bg-[#EFF9FB] flex items-center justify-center text-[#0A86A0] shrink-0">
-            <svg width={17} height={17} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" />
-              <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" />
-            </svg>
-          </div>
-          <div>
-            <p className="text-[15px] font-600 text-[#0F172A] leading-snug">Invite members</p>
-            <p className="text-[12px] font-500 text-[#94A3B8] mt-0.5">Share the invite link with your group</p>
-          </div>
-        </button>
-        <button onClick={() => { onAddGuest(); onClose(); }} className="pressable w-full flex items-center gap-3 px-4 py-3.5 rounded-[12px] text-left hover:bg-[#F4F6F9]">
-          <div className="w-9 h-9 rounded-[10px] bg-[#F4F6F9] flex items-center justify-center text-[#475569] shrink-0">
-            <IconUserPlus size={17} />
-          </div>
-          <div>
-            <p className="text-[15px] font-600 text-[#0F172A] leading-snug">Add guest member</p>
-            <p className="text-[12px] font-500 text-[#94A3B8] mt-0.5">For someone without the app</p>
-          </div>
-        </button>
-      </div>
-      <div className="px-3 pb-4 pt-1">
-        <button onClick={onClose} className="pressable w-full h-11 rounded-[13px] bg-[#F4F6F9] text-[#475569] font-600 text-[14px]">Cancel</button>
-      </div>
-    </Sheet>
-  );
-}
+// MemberActionsMenu extracted to src/features/members/components/MemberActionsMenu
 
 function MembersView({
   members, expenses, actionsOpen, onActionsClose, onSetMembers, onTapMember,
@@ -1298,66 +1235,9 @@ function MembersView({
 }
 
 // ─── Feature: Member Details ──────────────────────────────────────────────────
-function MemberOverflowSheet({
-  member, canEditName, onEditName, onRemove, onClose,
-}: {
-  member: Member; canEditName: boolean; onEditName: () => void; onRemove: () => void; onClose: () => void;
-}) {
-  return (
-    <Sheet onClose={onClose}>
-      <div className="px-5 pt-3 pb-3 flex items-center gap-3 border-b border-[#F1F5F9]">
-        <Avatar member={member} size="sm" />
-        <div>
-          <p className="text-[15px] font-700 text-[#0F172A] leading-snug">{member.name}</p>
-          <p className="text-[12px] font-500 text-[#94A3B8] capitalize">{member.role}</p>
-        </div>
-      </div>
-      <div className="px-3 py-2 space-y-0.5">
-        {canEditName && (
-          <button onClick={() => { onEditName(); onClose(); }} className="pressable w-full flex items-center gap-3 px-4 py-3.5 rounded-[12px] text-left hover:bg-[#F4F6F9]">
-            <IconEdit size={18} />
-            <span className="text-[15px] font-600 text-[#0F172A]">Edit name</span>
-          </button>
-        )}
-        {!member.isMe && (
-          <button onClick={() => { onRemove(); onClose(); }} className="pressable w-full flex items-center gap-3 px-4 py-3.5 rounded-[12px] text-left hover:bg-[#FFF5F5]">
-            <span className="text-[#DC2626]"><IconUserX size={18} /></span>
-            <span className="text-[15px] font-600 text-[#DC2626]">Remove from tour</span>
-          </button>
-        )}
-      </div>
-      <div className="px-3 pb-4 pt-1">
-        <button onClick={onClose} className="pressable w-full h-11 rounded-[13px] bg-[#F4F6F9] text-[#475569] font-600 text-[14px]">Cancel</button>
-      </div>
-    </Sheet>
-  );
-}
+// MemberOverflowSheet extracted to src/features/members/components/MemberOverflowSheet
 
-function RemoveMemberBlockedSheet({ member, reason, onClose }: {
-  member: Member; reason: string; onClose: () => void;
-}) {
-  return (
-    <Sheet onClose={onClose}>
-      <div className="px-5 pt-3 pb-6">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-[12px] bg-[#FFFBEB] flex items-center justify-center text-[#B45309] shrink-0">
-            <IconAlertCircle size={18} />
-          </div>
-          <div>
-            <p className="text-[16px] font-700 text-[#0F172A]">Can't remove {member.name.split(" ")[0]}</p>
-          </div>
-        </div>
-        <p className="text-[14px] font-500 text-[#475569] leading-relaxed mb-4">{reason}</p>
-        <div className="bg-[#FFFBEB] border border-[#FDE68A] rounded-[12px] px-4 py-3 mb-4">
-          <p className="text-[13px] font-600 text-[#B45309]">
-            Their financial history must stay with the tour to keep balances accurate for everyone.
-          </p>
-        </div>
-        <button onClick={onClose} className="pressable w-full h-12 rounded-[13px] bg-[#0A86A0] text-white font-700 text-[15px]">Got it</button>
-      </div>
-    </Sheet>
-  );
-}
+// RemoveMemberBlockedSheet extracted to src/features/members/components/RemoveMemberBlockedSheet
 
 // RemoveMemberConfirmSheet and EditNameSheet extracted to src/features/members/components/
 
