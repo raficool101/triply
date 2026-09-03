@@ -13,6 +13,7 @@ import RecordPaymentSheet from "../features/settlements/components/RecordPayment
 import SettlementHistoryView from "../features/settlements/SettlementHistoryView";
 import SettlementView from "../features/settlements/SettlementView";
 import StatRow from "../features/home/components/StatRow";
+import RecentExpenses from "../features/home/components/RecentExpenses";
 import { BUDGET } from "../features/home/homeConstants";
 
 const DEMO_INVITE_MODE = false;
@@ -347,41 +348,7 @@ function SidebarNav({ active, onChange }: { active: Tab; onChange: (t: Tab) => v
 // ─── Feature: Home View ───────────────────────────────────────────────────────
 // StatRow extracted to src/features/home/components/StatRow.tsx
 
-function RecentExpenses({ expenses, members, onViewAll, empty = false, onAddExpense }: {
-  expenses: Expense[]; members: Member[]; onViewAll: () => void; empty?: boolean; onAddExpense?: () => void;
-}) {
-  if (empty) {
-    return (
-      <section className="px-4 pb-4">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-[14px] font-700 text-[#0F172A]">Recent expenses</h2>
-        </div>
-        <div className="bg-white rounded-[14px] border border-[#E1E7EF] px-5 py-6 flex flex-col items-center text-center gap-3">
-          <div>
-            <p className="text-[14px] font-700 text-[#0F172A] mb-1">No expenses yet</p>
-            <p className="text-[13px] text-[#94A3B8] font-500 leading-relaxed max-w-[220px]">Add your first expense to start tracking the trip.</p>
-          </div>
-          <button onClick={onAddExpense} className="pressable flex items-center gap-1.5 px-4 h-9 rounded-full bg-[#0A86A0] text-white font-700 text-[13px] shadow-[0_2px_8px_rgba(10,134,160,0.18)]">
-            <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
-            Add expense
-          </button>
-        </div>
-      </section>
-    );
-  }
-  const recent = expenses.slice(0, 4);
-  return (
-    <section className="px-4 pb-4">
-      <div className="flex items-center justify-between mb-3">
-        <h2 className="text-[14px] font-700 text-[#0F172A]">Recent expenses</h2>
-        <button onClick={onViewAll} className="text-[13px] font-600 text-[#0A86A0] pressable">View all</button>
-      </div>
-      <div className="bg-white rounded-[14px] border border-[#E1E7EF] overflow-hidden divide-y divide-[#F4F6F9]">
-        {recent.map((expense) => <ExpenseRow key={expense.id} expense={expense} members={members} />)}
-      </div>
-    </section>
-  );
-}
+// RecentExpenses extracted to src/features/home/components/RecentExpenses.tsx
 
 function QuickBalances({ members, onViewAll, empty = false }: { members: Member[]; onViewAll: () => void; empty?: boolean }) {
   if (empty) {
@@ -420,51 +387,9 @@ function HomeView({ expenses, members, onTabChange, empty = false, onAddExpense 
   );
 }
 
-// ─── Feature: Expense Row ─────────────────────────────────────────────────────
-function ExpenseRow({
-  expense, members, onTap,
-}: {
-  expense: Expense; members: Member[]; onTap?: () => void;
-}) {
-  const payer = members.find((m) => m.id === expense.paidBy);
-  const cat = CATEGORY_META[expense.category];
-  const me = members.find((m) => m.isMe);
-  const inSplit = me ? expense.splitIds.includes(me.id) : false;
-  const myShare = inSplit ? Math.round(expense.amount / expense.splitIds.length) : 0;
-  const isMe = payer?.isMe;
-
-  return (
-    <div className={`flex items-start gap-3 px-4 py-3.5 ${onTap ? "pressable cursor-pointer" : ""}`} onClick={onTap}>
-      <div className="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0 mt-0.5" style={{ backgroundColor: cat.bg, color: cat.fg }}>
-        {cat.icon}
-      </div>
-      <div className="flex-1 min-w-0">
-        <p className="text-[14px] font-600 text-[#0F172A] truncate leading-snug">{expense.title}</p>
-        <p className="text-[12px] text-[#94A3B8] font-500 mt-0.5 leading-snug">
-          {isMe ? "You paid" : payer ? `${payer.name.split(" ")[0]} paid` : "Unknown"} · {expense.date}
-        </p>
-        {expense.syncStatus === "pending" && (
-          <span className="inline-flex items-center gap-1 mt-1 text-[11px] font-600 text-[#B45309]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#B45309] shrink-0" />
-            Pending sync
-          </span>
-        )}
-        {expense.syncStatus === "failed" && (
-          <span className="inline-flex items-center gap-1 mt-1 text-[11px] font-600 text-[#DC2626]">
-            <IconAlertCircle size={11} />
-            Sync failed
-          </span>
-        )}
-      </div>
-      <div className="text-right shrink-0">
-        <p className="num text-[14px] font-700 text-[#0F172A]">{fmt(expense.amount)}</p>
-        {inSplit && <p className="num text-[11px] text-[#94A3B8] font-500 mt-0.5">your {fmt(myShare)}</p>}
-      </div>
-    </div>
-  );
-}
-
 // ─── Feature: Expenses View ───────────────────────────────────────────────────
+// ExpenseRow extracted to src/features/expenses/components/ExpenseRow.tsx
+import ExpenseRow from "../features/expenses/components/ExpenseRow";
 type ExpenseFilter = "all" | "i-paid" | "my-expenses";
 
 function ExpensesView({
