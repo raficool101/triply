@@ -14,31 +14,7 @@ const DEMO_INVITE_MODE = false;
 type Tab = "home" | "expenses" | "members" | "settlement";
 type SyncStatus = "online" | "offline" | "syncing" | "pending" | "failed";
 
-interface Member {
-  id: string;
-  name: string;
-  initials: string;
-  color: string;
-  balance: number;
-  paid: number;
-  isMe?: boolean;
-  role?: "owner" | "member" | "guest";
-}
-
-interface Expense {
-  id: string;
-  title: string;
-  amount: number;
-  category: "food" | "lodging" | "transport" | "activity" | "other";
-  paidBy: string;
-  splitIds: string[];
-  date: string;
-  dateIso: string;
-  note?: string;
-  addedBy: string;
-  addedAt: string;
-  syncStatus?: "pending" | "failed";
-}
+import type { Member, Expense } from "../domain/types";
 
 interface RecordedSettlement {
   id: string;
