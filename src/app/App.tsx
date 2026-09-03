@@ -1682,7 +1682,7 @@ export default function App() {
     return <InviteMembers tourName={TOUR.name} tourDates={TOUR.dates} onBack={() => setScreen("createTour")} onDone={() => setScreen("tour")} />;
   }
   if (screen === "tourList" || !activeTourId) {
-    return <TourList onSelectTour={(id) => { setActiveTourId(id); setScreen("tour"); }} onNewTour={() => setScreen("createTour")} />;
+    return <TourList onSelectTour={(id: string) => { setActiveTourId(id); setScreen("tour"); }} onNewTour={() => setScreen("createTour")} />;
   }
   return <AuthenticatedApp isEmpty={activeTourId === "new"} />;
 }
