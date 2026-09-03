@@ -16,7 +16,6 @@ import StatRow from "../features/home/components/StatRow";
 import RecentExpenses from "../features/home/components/RecentExpenses";
 import QuickBalances from "../features/home/components/QuickBalances";
 import HomeView from "../features/home/HomeView";
-import { BUDGET } from "../features/home/homeConstants";
 
 const DEMO_INVITE_MODE = false;
 
