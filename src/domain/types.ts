@@ -25,3 +25,14 @@ export interface Expense {
   addedAt: string;
   syncStatus?: "pending" | "failed";
 }
+
+export interface RecordedSettlement {
+  id: string;
+  from: string;
+  to: string;
+  amount: number;
+  date: string;
+  dateIso: string;
+  recordedBy: string;
+  syncStatus?: "pending" | "failed";
+}

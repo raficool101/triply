@@ -15,23 +15,14 @@ const DEMO_INVITE_MODE = false;
 type Tab = "home" | "expenses" | "members" | "settlement";
 type SyncStatus = "online" | "offline" | "syncing" | "pending" | "failed";
 
-import type { Member, Expense } from "../domain/types";
+import type { Member, Expense, RecordedSettlement } from "../domain/types";
 import { MemberRowCompact, MemberRow } from "../features/members/components/MemberRow";
 import RemoveMemberConfirmSheet from "../features/members/components/RemoveMemberConfirmSheet";
 import EditNameSheet from "../features/members/components/EditNameSheet";
 import InviteSheet from "../features/members/components/InviteSheet";
 import AddGuestSheet from "../features/members/components/AddGuestSheet";
 
-interface RecordedSettlement {
-  id: string;
-  from: string;
-  to: string;
-  amount: number;
-  date: string;
-  dateIso: string;
-  recordedBy: string;
-  syncStatus?: "pending" | "failed";
-}
+
 
 interface SuggestedPayment {
   from: string;
@@ -127,12 +118,7 @@ function computeMembers(members: Member[], expenses: Expense[], recordedSettleme
   });
 }
 
-function hasMemberFinancialHistory(id: string, expenses: Expense[], recordedSettlements: RecordedSettlement[]): boolean {
-  return (
-    expenses.some((e) => e.paidBy === id || e.splitIds.includes(id)) ||
-    recordedSettlements.some((s) => s.from === id || s.to === id)
-  );
-}
+import { hasMemberFinancialHistory } from "../features/members/memberUtils";
 
 function computeSuggestedPayments(members: Member[]): SuggestedPayment[] {
   const payments: SuggestedPayment[] = [];
