@@ -28,7 +28,7 @@ import AddGuestSheet from "../features/members/components/AddGuestSheet";
 import MemberActionsMenu from "../features/members/components/MemberActionsMenu";
 import MemberOverflowSheet from "../features/members/components/MemberOverflowSheet";
 import RemoveMemberBlockedSheet from "../features/members/components/RemoveMemberBlockedSheet";
-import { IconEdit, IconUserPlus, IconUserX, IconAlertCircle, IconChevronLeft, IconChevronRight, IconDots, IconDotsV, IconArrowRight, IconCheck, IconTrash, IconInfo, IconHistory } from "../components/shared/icons";
+import { IconEdit, IconUserPlus, IconUserX, IconAlertCircle, IconChevronLeft, IconChevronRight, IconDots, IconDotsV, IconArrowRight, IconCheck, IconTrash, IconInfo, IconHistory, IconCheckCircle2 } from "../components/shared/icons";
 import DeleteSettlementSheet from "../features/settlements/components/DeleteSettlementSheet";
 import SettlementDetailSheet from "../features/settlements/components/SettlementDetailSheet";
 import Badge from "../components/shared/Badge";
@@ -253,14 +253,7 @@ function IconNote({ size = 16 }: { size?: number }) {
   );
 }
 // IconHistory moved to src/components/shared/icons.tsx
-function IconCheckCircle2({ size = 32 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
-      <polyline points="22 4 12 14.01 9 11.01" />
-    </svg>
-  );
-}
+// IconCheckCircle2 moved to src/components/shared/icons.tsx
 
 // `Avatar` moved to `src/components/shared/Avatar.tsx`
 
