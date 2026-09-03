@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Avatar from "../../components/shared/Avatar";
+import { IconMapPin } from "../../components/shared/icons";
 import { AuthFlow } from "../auth/Auth";
 
 // ─── Demo invite data ─────────────────────────────────────────────────────────
@@ -35,15 +36,6 @@ type JoinStep =
 type Guest = (typeof INVITE_GUESTS)[number];
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
-function IconMapPin({ size = 14 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-      <circle cx="12" cy="10" r="3" />
-    </svg>
-  );
-}
-
 function IconCalendar({ size = 13 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
