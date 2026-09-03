@@ -24,7 +24,10 @@ import AddGuestSheet from "../features/members/components/AddGuestSheet";
 import MemberActionsMenu from "../features/members/components/MemberActionsMenu";
 import MemberOverflowSheet from "../features/members/components/MemberOverflowSheet";
 import RemoveMemberBlockedSheet from "../features/members/components/RemoveMemberBlockedSheet";
-import { IconEdit, IconUserPlus, IconUserX, IconAlertCircle } from "../components/shared/icons";
+import { IconEdit, IconUserPlus, IconUserX, IconAlertCircle, IconChevronLeft, IconChevronRight, IconDots, IconDotsV, IconArrowRight, IconCheck } from "../components/shared/icons";
+import Badge from "../components/shared/Badge";
+import CATEGORY_META from "../lib/categoryMeta";
+import MemberDetails from "../features/members/MemberDetails";
 
 
 
@@ -140,16 +143,7 @@ function computeSuggestedPayments(members: Member[]): SuggestedPayment[] {
   return payments;
 }
 
-const CATEGORY_META: Record<
-  Expense["category"],
-  { icon: ReactNode; label: string; bg: string; fg: string }
-> = {
-  food:      { icon: <IconUtensils size={14} />, label: "Food",      bg: "#FFF7ED", fg: "#C2410C" },
-  lodging:   { icon: <IconBed      size={14} />, label: "Lodging",   bg: "#F0F9FF", fg: "#0369A1" },
-  transport: { icon: <IconCar      size={14} />, label: "Transport", bg: "#F5F3FF", fg: "#6D28D9" },
-  activity:  { icon: <IconStar     size={14} />, label: "Activity",  bg: "#FFF1F2", fg: "#BE123C" },
-  other:     { icon: <IconDots     size={14} />, label: "Other",     bg: "#F8FAFC", fg: "#475569" },
-};
+// CATEGORY_META moved to src/lib/categoryMeta.tsx
 
 const NAV_ITEMS: { id: Tab; label: string; icon: (active: boolean) => ReactNode }[] = [
   {
@@ -202,38 +196,6 @@ function IconPlus({ size = 20 }: { size?: number }) {
     </svg>
   );
 }
-function IconChevronLeft({ size = 20 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M15 18l-6-6 6-6" />
-    </svg>
-  );
-}
-function IconChevronRight({ size = 15 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M9 18l6-6-6-6" />
-    </svg>
-  );
-}
-function IconDots({ size = 18 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-      <circle cx="5"  cy="12" r="1" fill="currentColor" />
-      <circle cx="12" cy="12" r="1" fill="currentColor" />
-      <circle cx="19" cy="12" r="1" fill="currentColor" />
-    </svg>
-  );
-}
-function IconDotsV({ size = 18 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-      <circle cx="12" cy="5"  r="1" fill="currentColor" />
-      <circle cx="12" cy="12" r="1" fill="currentColor" />
-      <circle cx="12" cy="19" r="1" fill="currentColor" />
-    </svg>
-  );
-}
 function IconWifiOff({ size = 14 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -259,51 +221,7 @@ function IconCloud({ size = 13 }: { size?: number }) {
     </svg>
   );
 }
-function IconCheck({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
-  );
-}
-function IconArrowRight({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="5" y1="12" x2="19" y2="12" />
-      <polyline points="12 5 19 12 12 19" />
-    </svg>
-  );
-}
-function IconUtensils({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2M7 2v20M21 15V2a5 5 0 00-5 5v6c0 1.1.9 2 2 2h3zm0 0v7" />
-    </svg>
-  );
-}
-function IconBed({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M2 4v16M2 8h20v12M2 12h20M6 8V4" />
-      <rect x="6" y="10" width="4" height="2" rx="1" />
-    </svg>
-  );
-}
-function IconCar({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M5 17H3v-5l2-5h14l2 5v5h-2M5 17a2 2 0 104 0m6 0a2 2 0 104 0" />
-      <path d="M3 12h18" />
-    </svg>
-  );
-}
-function IconStar({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-    </svg>
-  );
-}
+// Icons moved to src/components/shared/icons.tsx
 function IconReceipt({ size = 22 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
@@ -385,23 +303,7 @@ function IconCheckCircle2({ size = 32 }: { size?: number }) {
   );
 }
 
-// ─── Primitive Components ─────────────────────────────────────────────────────
 // `Avatar` moved to `src/components/shared/Avatar.tsx`
-
-function Badge({ label, variant }: { label: string; variant: "positive" | "negative" | "warning" | "neutral" | "brand" }) {
-  const styles = {
-    positive: "bg-[#F0FDF4] text-[#15803D] border-[#BBF7D0]",
-    negative: "bg-[#FFF5F5] text-[#DC2626] border-[#FECACA]",
-    warning:  "bg-[#FFFBEB] text-[#B45309] border-[#FDE68A]",
-    neutral:  "bg-[#F1F5F9] text-[#475569] border-[#E2E8F0]",
-    brand:    "bg-[#EFF9FB] text-[#0A86A0] border-[#A3DFE9]",
-  };
-  return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-600 border ${styles[variant]}`}>
-      {label}
-    </span>
-  );
-}
 
 function SyncBanner({ status }: { status: SyncStatus }) {
   if (status === "online" || status === "pending") return null;
@@ -1241,247 +1143,7 @@ function MembersView({
 
 // RemoveMemberConfirmSheet and EditNameSheet extracted to src/features/members/components/
 
-function MemberDetails({
-  member, allMembers, allExpenses, recordedSettlements, me, isCurrentUserOwner,
-  onBack, onSetMembers, onRemove,
-}: {
-  member: Member; allMembers: Member[]; allExpenses: Expense[]; recordedSettlements: RecordedSettlement[];
-  me: Member | undefined; isCurrentUserOwner: boolean;
-  onBack: () => void; onSetMembers: (m: Member[]) => void; onRemove: () => void;
-}) {
-  const [showOverflow,       setShowOverflow]       = useState(false);
-  const [showEditName,       setShowEditName]       = useState(false);
-  const [showRemoveBlocked,  setShowRemoveBlocked]  = useState(false);
-  const [showRemoveConfirm,  setShowRemoveConfirm]  = useState(false);
-
-  const isMe      = member.isMe;
-  const isGuest   = member.role === "guest";
-  const isOwner   = member.role === "owner";
-  const shareAmt  = Math.round(allExpenses.filter((e) => e.splitIds.includes(member.id)).reduce((s, e) => s + e.amount / e.splitIds.length, 0));
-
-  const memberExpenses     = allExpenses.filter((e) => e.paidBy === member.id || e.splitIds.includes(member.id));
-  const memberSettlements  = recordedSettlements.filter((s) => s.from === member.id || s.to === member.id);
-
-  const balancePositive = member.balance > 2;
-  const balanceZero     = Math.abs(member.balance) <= 2;
-  const balanceColor    = balanceZero ? "#94A3B8" : balancePositive ? "#15803D" : "#DC2626";
-
-  let balanceExplanation = "";
-  if (balanceZero) {
-    balanceExplanation = `${isMe ? "You are" : `${member.name.split(" ")[0]} is`} fully settled.`;
-  } else if (balancePositive) {
-    balanceExplanation = `${isMe ? "You paid" : `${member.name.split(" ")[0]} paid`} more than their fair share and should receive ${fmt(member.balance)} back from the group.`;
-  } else {
-    balanceExplanation = `${isMe ? "You owe" : `${member.name.split(" ")[0]} owes`} ${fmt(Math.abs(member.balance))} to the group — their share of expenses exceeds what they've paid.`;
-  }
-
-  function handleRemoveTapped() {
-    if (isOwner) return;
-    if (hasMemberFinancialHistory(member.id, allExpenses, recordedSettlements)) {
-      setShowRemoveBlocked(true);
-    } else {
-      setShowRemoveConfirm(true);
-    }
-  }
-
-  const removedBlockedReason = (() => {
-    const paidExpenses = allExpenses.filter((e) => e.paidBy === member.id);
-    const splitExpenses = allExpenses.filter((e) => e.splitIds.includes(member.id));
-    const parts: string[] = [];
-    if (paidExpenses.length > 0) parts.push(`paid for ${paidExpenses.length} expense${paidExpenses.length > 1 ? "s" : ""}`);
-    if (splitExpenses.length > 0 && splitExpenses.length !== paidExpenses.length) parts.push(`is in ${splitExpenses.length} expense split${splitExpenses.length > 1 ? "s" : ""}`);
-    if (memberSettlements.length > 0) parts.push(`has ${memberSettlements.length} settlement${memberSettlements.length > 1 ? "s" : ""}`);
-    const nameFirst = member.name.split(" ")[0];
-    return `${nameFirst} has ${parts.join(" and ")}. Removing them would break the financial record for this tour.`;
-  })();
-
-  return (
-    <div className="fixed inset-0 z-50 bg-[#F4F6F9] flex flex-col overflow-hidden" style={{ animation: "slideInFromRight 220ms cubic-bezier(0.32,0.72,0,1)" }}>
-      {/* Header */}
-      <div className="bg-white border-b border-[#E1E7EF] safe-top shrink-0">
-        <div className="flex items-center gap-1 px-2 h-[52px] max-w-[720px] mx-auto w-full">
-          <button onClick={onBack} className="pressable w-10 h-10 flex items-center justify-center rounded-full text-[#475569]" aria-label="Go back">
-            <IconChevronLeft size={22} />
-          </button>
-          <h1 className="flex-1 text-[16px] font-700 text-[#0F172A] truncate px-1">Member detail</h1>
-          {isCurrentUserOwner && !isMe && (
-            <button onClick={() => setShowOverflow(true)} className="pressable w-10 h-10 flex items-center justify-center rounded-full text-[#475569]" aria-label="More options">
-              <IconDotsV size={18} />
-            </button>
-          )}
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="flex-1 overflow-y-auto">
-        <div className="max-w-[720px] mx-auto w-full pb-8">
-
-          {/* Identity card */}
-          <div className="bg-white px-5 pt-6 pb-5 border-b border-[#E1E7EF]">
-            <div className="flex items-center gap-4">
-              <Avatar member={member} size="xl" />
-              <div className="flex-1 min-w-0">
-                <p className="text-[20px] font-800 text-[#0F172A] leading-tight">{isMe ? "Rafi" : member.name}</p>
-                <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-                  {isOwner && <Badge label="Owner" variant="brand" />}
-                  {isMe    && <Badge label="You" variant="neutral" />}
-                  {isGuest && <Badge label="Guest" variant="neutral" />}
-                  {!isOwner && !isGuest && !isMe && <Badge label="Member" variant="neutral" />}
-                </div>
-                {isGuest && (
-                  <p className="text-[12px] font-500 text-[#94A3B8] mt-2 leading-snug">
-                    Participates in expenses but hasn't joined Triply yet.
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Financial summary */}
-          <div className="bg-white mt-3 mx-4 rounded-[14px] border border-[#E1E7EF] overflow-hidden">
-            <div className="grid grid-cols-3 divide-x divide-[#F1F5F9]">
-              <div className="px-3 py-3 text-center">
-                <p className="text-[10px] font-700 text-[#94A3B8] uppercase tracking-wide mb-1">Paid</p>
-                <p className="num text-[16px] font-700 text-[#0F172A] leading-snug">{fmt(member.paid)}</p>
-              </div>
-              <div className="px-3 py-3 text-center">
-                <p className="text-[10px] font-700 text-[#94A3B8] uppercase tracking-wide mb-1">Share</p>
-                <p className="num text-[16px] font-700 text-[#0F172A] leading-snug">{fmt(shareAmt)}</p>
-              </div>
-              <div className="px-3 py-3 text-center">
-                <p className="text-[10px] font-700 text-[#94A3B8] uppercase tracking-wide mb-1">Balance</p>
-                <p className="num text-[16px] font-700 leading-snug" style={{ color: balanceColor }}>
-                  {balanceZero ? "Settled" : `${balancePositive ? "+" : "−"}${fmt(member.balance)}`}
-                </p>
-              </div>
-            </div>
-            <div className="px-4 py-3 border-t border-[#F1F5F9] bg-[#F8FAFC]">
-              <p className="text-[12px] font-500 text-[#475569] leading-relaxed">{balanceExplanation}</p>
-            </div>
-          </div>
-
-          {/* Expense activity */}
-          {memberExpenses.length > 0 ? (
-            <div className="mt-3">
-              <p className="text-[11px] font-700 text-[#94A3B8] uppercase tracking-wider px-5 mb-2">Expense activity</p>
-              <div className="bg-white mx-4 rounded-[14px] border border-[#E1E7EF] overflow-hidden divide-y divide-[#F4F6F9]">
-                {memberExpenses.slice(0, 8).map((e) => {
-                  const cat = CATEGORY_META[e.category];
-                  const isPayer = e.paidBy === member.id;
-                  const inSplit = e.splitIds.includes(member.id);
-                  const share = inSplit ? Math.round(e.amount / e.splitIds.length) : 0;
-                  return (
-                    <div key={e.id} className="flex items-start gap-3 px-4 py-3">
-                      <div className="w-8 h-8 rounded-[9px] flex items-center justify-center shrink-0 mt-0.5" style={{ backgroundColor: cat.bg, color: cat.fg }}>
-                        <div style={{ transform: "scale(0.9)" }}>{cat.icon}</div>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[13px] font-600 text-[#0F172A] truncate leading-snug">{e.title}</p>
-                        <p className="text-[11px] font-500 text-[#94A3B8] mt-0.5">
-                          {e.date}
-                          {isPayer && inSplit && " · Paid & split"}
-                          {isPayer && !inSplit && " · Paid"}
-                          {!isPayer && inSplit && ` · Split with ${e.splitIds.length - 1} others`}
-                        </p>
-                      </div>
-                      <div className="text-right shrink-0">
-                        {isPayer && <p className="num text-[13px] font-700 text-[#0F172A]">{fmt(e.amount)}</p>}
-                        {inSplit && <p className="num text-[11px] font-500 text-[#94A3B8] mt-0.5">share {fmt(share)}</p>}
-                      </div>
-                    </div>
-                  );
-                })}
-                {memberExpenses.length > 8 && (
-                  <div className="px-4 py-3 text-center">
-                    <p className="text-[12px] font-500 text-[#94A3B8]">+{memberExpenses.length - 8} more expenses</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          ) : (
-            <div className="mt-3 mx-4 bg-white rounded-[14px] border border-[#E1E7EF] px-4 py-4">
-              <p className="text-[13px] font-500 text-[#94A3B8] text-center">No expense activity yet.</p>
-            </div>
-          )}
-
-          {/* Settlement activity */}
-          {memberSettlements.length > 0 && (
-            <div className="mt-3">
-              <p className="text-[11px] font-700 text-[#94A3B8] uppercase tracking-wider px-5 mb-2">Settlements</p>
-              <div className="bg-white mx-4 rounded-[14px] border border-[#E1E7EF] overflow-hidden divide-y divide-[#F4F6F9]">
-                {memberSettlements.map((s) => {
-                  const from     = allMembers.find((m) => m.id === s.from);
-                  const to       = allMembers.find((m) => m.id === s.to);
-                  const isFromMe = s.from === member.id;
-                  return (
-                    <div key={s.id} className="flex items-start gap-3 px-4 py-3">
-                      <div className="flex items-center gap-1 shrink-0 mt-0.5">
-                        {from && <Avatar member={from} size="sm" />}
-                        <span className="text-[#C9D4DF] mx-1"><IconArrowRight size={12} /></span>
-                        {to && <Avatar member={to} size="sm" />}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[13px] font-600 text-[#0F172A] truncate">
-                          {from?.isMe ? "You" : from?.name.split(" ")[0]} paid {to?.isMe ? "you" : to?.name.split(" ")[0]}
-                        </p>
-                        {s.date && <p className="text-[11px] font-500 text-[#94A3B8] mt-0.5">{s.date}</p>}
-                      </div>
-                      <p className={`num text-[14px] font-700 shrink-0 ${isFromMe ? "text-[#DC2626]" : "text-[#15803D]"}`}>
-                        {isFromMe ? "−" : "+"}{fmt(s.amount)}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Overflow menu */}
-      {showOverflow && (
-        <MemberOverflowSheet
-          member={member}
-          canEditName={isGuest}
-          onEditName={() => setShowEditName(true)}
-          onRemove={handleRemoveTapped}
-          onClose={() => setShowOverflow(false)}
-        />
-      )}
-
-      {/* Edit name sheet */}
-      {showEditName && (
-        <EditNameSheet
-          member={member}
-          onSave={(name) => {
-            const initials = name.split(" ").map((w) => w[0]?.toUpperCase() ?? "").join("").slice(0, 2);
-            onSetMembers(allMembers.map((m) => m.id === member.id ? { ...m, name, initials } : m));
-            setShowEditName(false);
-          }}
-          onClose={() => setShowEditName(false)}
-        />
-      )}
-
-      {/* Remove blocked */}
-      {showRemoveBlocked && (
-        <RemoveMemberBlockedSheet
-          member={member}
-          reason={removedBlockedReason}
-          onClose={() => setShowRemoveBlocked(false)}
-        />
-      )}
-
-      {/* Remove confirm */}
-      {showRemoveConfirm && (
-        <RemoveMemberConfirmSheet
-          member={member}
-          onConfirm={() => { onRemove(); setShowRemoveConfirm(false); }}
-          onClose={() => setShowRemoveConfirm(false)}
-        />
-      )}
-    </div>
-  );
-}
+// MemberDetails extracted to src/features/members/MemberDetails
 
 // ─── Feature: Settlement (full experience) ────────────────────────────────────
 
