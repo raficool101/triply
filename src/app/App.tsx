@@ -18,6 +18,7 @@ type Tab = "home" | "expenses" | "members" | "settlement";
 type SyncStatus = "online" | "offline" | "syncing" | "pending" | "failed";
 
 import type { Member, Expense, RecordedSettlement } from "../domain/types";
+import type { SuggestedPayment } from "../features/settlements/settlementUtils";
 import { MemberRowCompact, MemberRow } from "../features/members/components/MemberRow";
 import RemoveMemberConfirmSheet from "../features/members/components/RemoveMemberConfirmSheet";
 import EditNameSheet from "../features/members/components/EditNameSheet";
@@ -35,11 +36,7 @@ import MembersView from "../features/members/MembersView";
 
 
 
-interface SuggestedPayment {
-  from: string;
-  to: string;
-  amount: number;
-}
+
 
 type SubScreen =
   | { type: "expense-detail"; id: string }
@@ -124,22 +121,9 @@ function computeMembers(members: Member[], expenses: Expense[], recordedSettleme
 }
 
 import { hasMemberFinancialHistory } from "../features/members/memberUtils";
+import { computeSuggestedPayments } from "../features/settlements/settlementUtils";
 
-function computeSuggestedPayments(members: Member[]): SuggestedPayment[] {
-  const payments: SuggestedPayment[] = [];
-  const creds = members.filter((m) => m.balance > 1).sort((a, b) => b.balance - a.balance).map((m) => ({ id: m.id, bal: m.balance }));
-  const debts = members.filter((m) => m.balance < -1).sort((a, b) => a.balance - b.balance).map((m) => ({ id: m.id, bal: m.balance }));
-  let ci = 0, di = 0;
-  while (ci < creds.length && di < debts.length) {
-    const amount = Math.min(creds[ci].bal, -debts[di].bal);
-    if (amount >= 1) payments.push({ from: debts[di].id, to: creds[ci].id, amount: Math.round(amount) });
-    creds[ci].bal -= amount;
-    debts[di].bal += amount;
-    if (creds[ci].bal < 1) ci++;
-    if (debts[di].bal > -1) di++;
-  }
-  return payments;
-}
+ 
 
 // CATEGORY_META moved to src/lib/categoryMeta.tsx
 
